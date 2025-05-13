@@ -17,7 +17,7 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 torch.set_default_dtype(torch.float64)
 
 seed = 17
-num_examples_train = 120
+num_examples_train = 440
 num_examples_test = 100
 valid_num = 0
 test_num = 0

@@ -20,7 +20,7 @@ import wandb
 DEVICE = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 # DEVICE = torch.device("cpu")
 log_wandb = False
-
+valid = True
 
 def main():
     parser = argparse.ArgumentParser(description='SCS_unroll')
@@ -165,8 +165,8 @@ def train_net(filepath, args):
     num_examples = args['simpleEx']
     lambda1 = args['lambda1']
     hidden_layers = args['hiddenSize']
-    frac_valid = 1/12
-    num_train = int(num_examples*(1-2*frac_valid))
+    frac_valid = 1/11
+    num_train = int(num_examples*(1-frac_valid))
     num_valid = int(num_examples*frac_valid)
     # num_train = 1
     # num_valid = 1
@@ -294,7 +294,7 @@ def train_net(filepath, args):
                 valid_loss += loss.item()
             
                 
-                if False:
+                if valid:
                     for iii in range(W_label.shape[0]):
                         P = data.P[[iii]].detach().cpu().numpy()[0] 
                         c = data.c[[iii]].detach().cpu().numpy().flatten()

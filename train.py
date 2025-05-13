@@ -21,14 +21,14 @@ import argparse
 
 from utils import SimpleProblem
 import default_args
-from model_utils_gd7 import SCS_unroll
+from model_utils import SCS_unroll
 
 import wandb
 
 DEVICE = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 # DEVICE = torch.device("cpu")
 log_wandb = False
-
+valid = True
 
 def main():
     parser = argparse.ArgumentParser(description='SCS_unroll')
@@ -171,8 +171,8 @@ def train_net(filepath, args):
     batch_size = args['batchSize']
     num_examples = args['simpleEx']
     lambda1 = args['lambda1']
-    frac_valid = 1/12
-    num_train = int(num_examples*(1-2*frac_valid))
+    frac_valid = 1/11
+    num_train = int(num_examples*(1-frac_valid))
     num_valid = int(num_examples*frac_valid)
     train_indices = np.arange(num_examples)[:num_train]
     valid_indices = np.arange(num_examples)[num_train:num_train+num_valid]
@@ -279,7 +279,7 @@ def train_net(filepath, args):
                 loss = nn.MSELoss()(X.squeeze(-1), X_label)*lambda1 + nn.MSELoss()(Y.squeeze(-1), Y_label) 
                 valid_loss += loss.item()
                 
-                if False:
+                if valid:
                     for iii in range(X.shape[0]):
                         P = data.P[[iii]].detach().cpu().numpy()[0] 
                         c = data.c[[iii]].detach().cpu().numpy().flatten()

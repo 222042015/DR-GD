@@ -31,7 +31,7 @@ torch.set_default_dtype(torch.float64)
 seed = 17
 np.random.seed(seed)
 save_dir = "/datasets/simple"
-num_examples_train = 120
+num_examples_train = 440
 num_examples_test = 100
 
 
